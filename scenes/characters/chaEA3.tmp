@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://b855pbdmlvgle"]
+
+[ext_resource type="Script" path="res://scripts/character.gd" id="1_rroa1"]
+[ext_resource type="Texture2D" uid="uid://66h28fx0n3u3" path="res://assets/sprites/icon.svg" id="2_qak1l"]
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_0vmot"]
+length = 14.0
+slide_on_slope = true
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_c0m38"]
+length = 6.0
+slide_on_slope = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqbyj"]
+size = Vector2(14, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75mes"]
+size = Vector2(14, 29.7612)
+
+[node name="Character" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_rroa1")
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+scale = Vector2(1, 2)
+texture = ExtResource("2_qak1l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("SeparationRayShape2D_0vmot")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+rotation = 3.14159
+shape = SubResource("SeparationRayShape2D_0vmot")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+rotation = -1.5708
+shape = SubResource("SeparationRayShape2D_c0m38")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+rotation = 1.5708
+shape = SubResource("SeparationRayShape2D_c0m38")
+
+[node name="InteractionArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractionArea"]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_kqbyj")
+
+[node name="HurtDetectionArea" type="Area2D" parent="."]
+scale = Vector2(1, 1.00802)
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtDetectionArea"]
+position = Vector2(0, -13.8886)
+shape = SubResource("RectangleShape2D_75mes")
+
+[node name="DeathTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

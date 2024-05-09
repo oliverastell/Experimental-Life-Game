@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://brxe5b0v66lvv"]
+
+[ext_resource type="Script" path="res://scripts/game_info.gd" id="1_viobh"]
+
+[node name="GameInfo" type="Node"]
+script = ExtResource("1_viobh")

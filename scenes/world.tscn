@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=3 uid="uid://ctgw8fyb5lsdn"]
+
+[ext_resource type="PackedScene" uid="uid://b855pbdmlvgle" path="res://scenes/characters/character.tscn" id="1_ih05d"]
+[ext_resource type="PackedScene" uid="uid://bkk6p6x8snrfc" path="res://scenes/heart.tscn" id="2_ryi2n"]
+[ext_resource type="PackedScene" uid="uid://bqrfosby3xvlr" path="res://scenes/spike.tscn" id="3_16xyu"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_2i3e3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xovw8"]
+size = Vector2(20, 99)
+
+[node name="World" type="Node2D"]
+
+[node name="Character" parent="." instance=ExtResource("1_ih05d")]
+z_index = 4
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("WorldBoundaryShape2D_2i3e3")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(108, -46.5)
+shape = SubResource("RectangleShape2D_xovw8")
+
+[node name="Heart" parent="." instance=ExtResource("2_ryi2n")]
+position = Vector2(-52, -20)
+
+[node name="Spike" parent="." instance=ExtResource("3_16xyu")]
+position = Vector2(52, -3)
+rotation = 0.261799
+
+[node name="Spike2" parent="." instance=ExtResource("3_16xyu")]
+position = Vector2(98, -43)
+rotation = -1.57079
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
