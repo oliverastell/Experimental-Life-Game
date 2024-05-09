@@ -59,6 +59,8 @@ jump={
 2d_physics/layer_3="hurt"
 2d_physics/layer_4="interactable"
 2d_physics/layer_5="spike"
+2d_physics/layer_6="enemy"
+2d_physics/layer_7="Layer 7"
 
 [rendering]
 

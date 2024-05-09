@@ -52,12 +52,7 @@ func dead_check(delta):
 		dead_grounded_time = 0
 	
 	if dead_grounded_time > 2:
-		death_complete()
-
-
-func death_complete():
-	$Collision.shape.size.y = 14
-	$SpikeDetectionArea/Collision.shape.size.y = 14
+		pass
 
 
 func move(delta):
@@ -78,8 +73,12 @@ func jump():
 
 
 func death(cause: DamageCause):
-	dead = true
+	var rectangle = RectangleShape2D.new()
+	rectangle.size = Vector2(12, 14)
+	$Collision.shape = rectangle
+	$SpikeDetectionArea/Collision.shape = rectangle
 	
+	dead = true
 
 
 func damage(amount: int, cause: DamageCause, force_field_time: float = 3):
@@ -92,7 +91,7 @@ func damage(amount: int, cause: DamageCause, force_field_time: float = 3):
 		death(cause)
 
 
-func hurt_detect():
+func _hurt_detect():
 	var areas = hurt_detection_area.get_overlapping_areas()
 	if not areas.is_empty():
 		var area = areas[0]
@@ -109,7 +108,15 @@ func death_bounce(collision):
 		velocity.y = 0
 	
 	velocity = velocity.bounce(collision.get_normal())
-	velocity *= 0.8
+	velocity *= 0.5
+
+
+func _push_object(delta):
+	for i in get_slide_collision_count():
+		var c = get_slide_collision(i)
+		var collider = c.get_collider()
+		if collider is RigidBody2D:
+			collider.apply_central_impulse(-c.get_normal() * delta * 2000)
 
 
 func _physics_process(delta):
@@ -128,8 +135,10 @@ func _physics_process(delta):
 		move(delta)
 		apply_gravity(delta)
 		jump()
-		hurt_detect()
 		move_and_slide()
+		
+		_hurt_detect()
+		_push_object(delta)
 	
 	force_field -= delta
 

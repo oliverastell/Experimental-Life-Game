@@ -1,29 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://b855pbdmlvgle"]
+[gd_scene load_steps=5 format=3 uid="uid://b855pbdmlvgle"]
 
 [ext_resource type="Script" path="res://scripts/character.gd" id="1_rroa1"]
 [ext_resource type="Texture2D" uid="uid://66h28fx0n3u3" path="res://assets/sprites/icon.svg" id="2_qak1l"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ddm7"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ixpff"]
 size = Vector2(12, 28)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kqbyj"]
 size = Vector2(14, 30)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ixpff"]
-size = Vector2(12, 28)
-
 [node name="Character" type="CharacterBody2D"]
 collision_layer = 2
+collision_mask = 3
 script = ExtResource("1_rroa1")
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_ixpff")
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(0, -16)
 scale = Vector2(1, 2)
 texture = ExtResource("2_qak1l")
-
-[node name="Collision" type="CollisionShape2D" parent="."]
-position = Vector2(0, -14)
-shape = SubResource("RectangleShape2D_7ddm7")
 
 [node name="InteractionArea" type="Area2D" parent="."]
 collision_layer = 0
