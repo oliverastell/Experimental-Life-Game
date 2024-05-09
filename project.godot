@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="gamejam Another Life"
+config/name="Experimental Life Game"
 run/main_scene="res://scenes/world.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://assets/sprites/icon.svg"
