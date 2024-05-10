@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://5mpfdq4qvwee"]
+
+[ext_resource type="Script" path="res://scripts/athlete.gd" id="1_gpics"]
+[ext_resource type="PackedScene" uid="uid://b855pbdmlvgle" path="res://scenes/characters/character.tscn" id="1_qlgoc"]
+
+[node name="Character" instance=ExtResource("1_qlgoc")]
+script = ExtResource("1_gpics")

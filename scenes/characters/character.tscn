@@ -49,4 +49,7 @@ shape = SubResource("RectangleShape2D_ixpff")
 
 [node name="DeathTimer" type="Timer" parent="."]
 
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
 [connection signal="timeout" from="DeathTimer" to="." method="_on_death_timer_timeout"]

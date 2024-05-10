@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://djqrne5h3qgec"]
+
+[ext_resource type="PackedScene" uid="uid://b855pbdmlvgle" path="res://scenes/characters/character.tscn" id="1_dd1rg"]
+[ext_resource type="Script" path="res://scripts/delivery_boy.gd" id="2_fuf56"]
+
+[node name="DeliveryBoy" instance=ExtResource("1_dd1rg")]
+script = ExtResource("2_fuf56")
+
+[node name="SpaceCheck" type="RayCast2D" parent="." index="7"]
+position = Vector2(0, -29)
+target_position = Vector2(0, -24)

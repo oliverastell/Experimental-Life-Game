@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0lfddryv7trb"]
+
+[ext_resource type="Texture2D" uid="uid://blds7mx0ua668" path="res://assets/sprites/card.png" id="1_gl6ke"]
+[ext_resource type="Script" path="res://scripts/card.gd" id="2_78pn1"]
+
+[node name="Card" type="TextureRect"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -96.0
+offset_right = 32.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(0, -48)
+texture = ExtResource("1_gl6ke")
+script = ExtResource("2_78pn1")

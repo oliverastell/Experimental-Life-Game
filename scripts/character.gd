@@ -5,39 +5,47 @@ enum DamageCause {
 	DEFAULT, IMPALEMENT
 }
 
-const SPEED = 200
-const FRICTION = 15
 const AIR_FRICTION = 3
 const DEAD_FRICTION = 1
-const GRAVITY = 980
-const JUMP_POWER = 300
+
+var friction = 15
+
+var strength = 3000
+var jump_power = 300
+var gravity = 980
+var speed = 200
 
 var force_field = 0
 var health = 3
 
 var dead = false
+var finally_dead = false
 var dead_grounded_time = 0
+
+var death_function: Callable
 
 @onready var interaction_area = $InteractionArea
 @onready var hurt_detection_area = $HurtDetectionArea
 @onready var spike_detection_area = $SpikeDetectionArea
 @onready var death_timer = $DeathTimer
-
+@onready var camera = $Camera2D
 
 func _on_death_timer_timeout():
 	get_tree().reload_current_scene()
 
+func _ready():
+	camera.enabled = true
 
 func dead_move(delta): 
 	velocity.x = lerpf(velocity.x, 0, delta * DEAD_FRICTION)
 
 
 func dead_gravity(delta):
-	velocity.y += GRAVITY * delta
+	velocity.y += gravity * delta
 
 func dead_spike(delta):
 	if spike_detection_area.has_overlapping_areas():
-		var new_velocity = Vector2.UP.rotated(spike_detection_area.get_overlapping_areas()[0].rotation) * GRAVITY / 100
+		var new_velocity = Vector2.UP.rotated(spike_detection_area.get_overlapping_areas()[0].rotation) * gravity / 100
 		if new_velocity.y < 0:
 			new_velocity *= -1
 		new_velocity.x = clamp(new_velocity.x, -new_velocity.y, new_velocity.y)
@@ -45,37 +53,47 @@ func dead_spike(delta):
 		return true
 	return false
 
+func dead_final():
+	finally_dead = true
+	camera.enabled = false
+	death_function.call()
+	print("call death func")
+
 
 func dead_check(delta):
 	dead_grounded_time += delta
-	if velocity.length_squared() > 100:
+	if velocity.length_squared() > 1000:
 		dead_grounded_time = 0
 	
-	if dead_grounded_time > 2:
-		pass
+	print(velocity.length_squared(), "  ", dead_grounded_time)
+	if dead_grounded_time > 2 and not finally_dead:
+		dead_final()
 
 
 func move(delta):
-	var movement = Input.get_axis("left", "right") * SPEED
-	velocity.x = lerpf(velocity.x, movement, delta * (FRICTION if is_on_floor() else AIR_FRICTION))
+	var movement = Input.get_axis("left", "right") * speed
+	velocity.x = lerpf(velocity.x, movement, delta * (friction if is_on_floor() else AIR_FRICTION))
 
 
 func apply_gravity(delta):
 	if is_on_floor():
 		velocity.y = min(0, velocity.y)
 	else:
-		velocity.y += GRAVITY * delta
+		velocity.y += gravity * delta
 
 
 func jump():
 	if is_on_floor() and Input.is_action_pressed("jump"):
-		velocity.y = -JUMP_POWER
+		velocity.y = -jump_power
 
 
-func death(cause: DamageCause):
+func kill(cause: DamageCause):
+	health = 0
 	var rectangle = RectangleShape2D.new()
 	rectangle.size = Vector2(12, 14)
+	set_collision_mask_value(2, false)
 	$Collision.shape = rectangle
+	$Collision.one_way_collision = true
 	$SpikeDetectionArea/Collision.shape = rectangle
 	
 	dead = true
@@ -88,7 +106,7 @@ func damage(amount: int, cause: DamageCause, force_field_time: float = 3):
 	health -= amount
 	force_field = force_field_time
 	if health == 0:
-		death(cause)
+		kill(cause)
 
 
 func _hurt_detect():
@@ -115,8 +133,10 @@ func _push_object(delta):
 	for i in get_slide_collision_count():
 		var c = get_slide_collision(i)
 		var collider = c.get_collider()
+		if abs(c.get_angle()) < PI/3 or abs(c.get_angle()) > PI*2/3:
+			continue
 		if collider is RigidBody2D:
-			collider.apply_central_impulse(-c.get_normal() * delta * 2000)
+			collider.apply_central_impulse(-c.get_normal() * delta * strength)
 
 
 func _physics_process(delta):
@@ -138,6 +158,7 @@ func _physics_process(delta):
 		move_and_slide()
 		
 		_hurt_detect()
+		
 		_push_object(delta)
 	
 	force_field -= delta
