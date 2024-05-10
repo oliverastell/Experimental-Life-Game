@@ -1,18 +1,18 @@
 [gd_scene load_steps=4 format=3 uid="uid://bkk6p6x8snrfc"]
 
-[ext_resource type="Script" path="res://scripts/heart.gd" id="1_hc2uq"]
-[ext_resource type="Texture2D" uid="uid://66h28fx0n3u3" path="res://assets/sprites/icon.svg" id="1_o50a0"]
+[ext_resource type="Script" path="res://scripts/heart.gd" id="1_osumm"]
+[ext_resource type="Texture2D" uid="uid://66h28fx0n3u3" path="res://assets/sprites/icon.svg" id="2_ipwt0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v6p1n"]
 size = Vector2(16, 16)
 
-[node name="Heart" type="Area2D"]
+[node name="HealthCrystal" type="Area2D"]
 collision_layer = 8
 collision_mask = 0
-script = ExtResource("1_hc2uq")
+script = ExtResource("1_osumm")
 
 [node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource("1_o50a0")
+texture = ExtResource("2_ipwt0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_v6p1n")

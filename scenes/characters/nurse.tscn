@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://bkvkyfxyiqf8i"]
+
+[ext_resource type="PackedScene" uid="uid://b855pbdmlvgle" path="res://scenes/characters/character.tscn" id="1_8v573"]
+[ext_resource type="Script" path="res://scripts/healer.gd" id="2_s03yx"]
+
+[node name="Nurse" instance=ExtResource("1_8v573")]
+script = ExtResource("2_s03yx")

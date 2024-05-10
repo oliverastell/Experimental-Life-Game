@@ -1,5 +1,9 @@
 extends Node2D
 
+const WIDTH = 96
+const HEIGHT = 128
+const MARGIN = 8
+
 var _selected = null
 var _enabled = enable()
 
@@ -44,17 +48,17 @@ func _enabled_movement(delta):
 	
 	for node in nodes:
 		var new_pos = Vector2(
-			i*32.0 - 16 * length,
-			-104
+			i*WIDTH/2 - WIDTH/2 * length,
+			-HEIGHT-MARGIN
 		)
 		
 		var mouse_dist = (new_pos.x + 32 - get_local_mouse_position().x)
-		new_pos.y += min(abs(mouse_dist) - 50, 48)
-		new_pos.x += clamp(mouse_dist, -104, 104)
+		new_pos.y += min(abs(mouse_dist) - 50, WIDTH/2+MARGIN)
+		new_pos.x += clamp(mouse_dist, -HEIGHT-MARGIN, HEIGHT-MARGIN)
 		
-		if -16 < mouse_dist and mouse_dist <= 16 and _selected == null and new_pos.y - get_local_mouse_position().y < 48:
+		if -WIDTH/4 < mouse_dist and mouse_dist <= WIDTH/4 and _selected == null and new_pos.y - get_local_mouse_position().y < WIDTH-MARGIN:
 			node.scale = lerp(node.scale, Vector2.ONE*1.5, delta * 10)
-			new_pos.x -= 16
+			new_pos.x -= WIDTH/4
 			new_pos.y -= 64
 			_selected = node
 		else:

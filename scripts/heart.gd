@@ -1,2 +1,2 @@
-class_name Heart
+class_name HealthCrystal
 extends Area2D

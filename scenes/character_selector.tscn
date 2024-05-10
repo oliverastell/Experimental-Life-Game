@@ -1,30 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cs83bglgkh7w1"]
+[gd_scene load_steps=6 format=3 uid="uid://cs83bglgkh7w1"]
 
 [ext_resource type="Script" path="res://scripts/cards.gd" id="1_cp3e2"]
 [ext_resource type="PackedScene" uid="uid://d0lfddryv7trb" path="res://scenes/card.tscn" id="2_falm6"]
 [ext_resource type="PackedScene" uid="uid://b855pbdmlvgle" path="res://scenes/characters/character.tscn" id="3_woyhb"]
 [ext_resource type="PackedScene" uid="uid://djqrne5h3qgec" path="res://scenes/characters/delivery_boy.tscn" id="4_3pcyf"]
-[ext_resource type="Script" path="res://scripts/athlete.gd" id="4_ewfkm"]
-[ext_resource type="Texture2D" uid="uid://66h28fx0n3u3" path="res://assets/sprites/icon.svg" id="5_p6xbl"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ixpff"]
-size = Vector2(12, 28)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kqbyj"]
-size = Vector2(14, 30)
-
-[sub_resource type="PackedScene" id="PackedScene_cknj6"]
-_bundled = {
-"conn_count": 1,
-"conns": PackedInt32Array(9, 0, 22, 21, 2, 0, 0),
-"editable_instances": [],
-"names": PackedStringArray("Athlete", "collision_layer", "collision_mask", "script", "CharacterBody2D", "Collision", "position", "shape", "CollisionShape2D", "Icon", "scale", "texture", "Sprite2D", "InteractionArea", "Area2D", "HurtDetectionArea", "SpikeDetectionArea", "DeathTimer", "Timer", "Camera2D", "position_smoothing_enabled", "_on_death_timer_timeout", "timeout"),
-"node_count": 11,
-"node_paths": [],
-"nodes": PackedInt32Array(-1, -1, 4, 0, -1, 3, 1, 0, 2, 1, 3, 2, 0, 0, 0, 8, 5, -1, 2, 6, 3, 7, 4, 0, 0, 0, 12, 9, -1, 3, 6, 5, 10, 6, 11, 7, 0, 0, 0, 14, 13, -1, 2, 1, 8, 2, 9, 0, 3, 0, 8, 5, -1, 2, 6, 3, 7, 10, 0, 0, 0, 14, 15, -1, 2, 1, 8, 2, 11, 0, 5, 0, 8, 5, -1, 2, 6, 3, 7, 4, 0, 0, 0, 14, 16, -1, 2, 1, 8, 2, 11, 0, 7, 0, 8, 5, -1, 2, 6, 3, 7, 4, 0, 0, 0, 18, 17, -1, 0, 0, 0, 0, 19, 19, -1, 1, 20, 12, 0),
-"variants": [2, 3, ExtResource("4_ewfkm"), Vector2(0, -14), SubResource("RectangleShape2D_ixpff"), Vector2(0, -16), Vector2(1, 2), ExtResource("5_p6xbl"), 0, 8, SubResource("RectangleShape2D_kqbyj"), 4, true],
-"version": 3
-}
+[ext_resource type="PackedScene" uid="uid://bkvkyfxyiqf8i" path="res://scenes/characters/nurse.tscn" id="5_mdvby"]
 
 [node name="CardSelector" type="Node2D"]
 script = ExtResource("1_cp3e2")
@@ -85,7 +65,22 @@ offset_right = 64.0
 offset_bottom = 96.0
 grow_horizontal = 1
 grow_vertical = 1
-placement_scene = SubResource("PackedScene_cknj6")
+placement_scene = ExtResource("4_3pcyf")
+
+[node name="Card4" parent="CanvasLayer/CardFrame" instance=ExtResource("2_falm6")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 64.0
+offset_bottom = 96.0
+grow_horizontal = 1
+grow_vertical = 1
+placement_scene = ExtResource("5_mdvby")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

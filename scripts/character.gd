@@ -2,7 +2,7 @@ class_name Character
 extends CharacterBody2D
 
 enum DamageCause {
-	DEFAULT, IMPALEMENT
+	DEFAULT, IMPALEMENT, ABILITY
 }
 
 const AIR_FRICTION = 3
@@ -99,14 +99,19 @@ func kill(cause: DamageCause):
 	dead = true
 
 
-func damage(amount: int, cause: DamageCause, force_field_time: float = 3):
+func damage(amount: int, cause: DamageCause, force_field_time: float = 3) -> bool:
 	if force_field > 0:
-		return
+		return false
 	
 	health -= amount
 	force_field = force_field_time
 	if health == 0:
 		kill(cause)
+	elif health < 0:
+		health = 0
+		return false
+	return true
+	
 
 
 func _hurt_detect():
@@ -137,6 +142,31 @@ func _push_object(delta):
 			continue
 		if collider is RigidBody2D:
 			collider.apply_central_impulse(-c.get_normal() * delta * strength)
+
+
+func activate(): pass
+
+
+func _interact(interaction_node):
+	if not is_instance_valid(interaction_node): return
+	if interaction_node is HealthCrystal:
+		interaction_node.queue_free()
+		health += 1
+
+
+func _input(event):
+	if event.is_action_pressed("activate"):
+		if not interaction_area.has_overlapping_areas():
+			activate()
+			return
+		
+		var areas: Array[Area2D] = interaction_area.get_overlapping_areas()
+		
+		areas.sort_custom(func(a, b) -> bool:
+			return interaction_area.position.distance_to_squared(a.position) > interaction_area.position.distance_to_squared(b.position)
+		)
+		
+		_interact(areas[0])
 
 
 func _physics_process(delta):
